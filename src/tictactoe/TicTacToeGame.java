@@ -3,10 +3,13 @@ package tictactoe;
 import java.util.function.Predicate;
 
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Node;
 
+/**
+ * This class is how the game work.
+ * @author Jim
+ */
 
 public class TicTacToeGame {
 	private final int boardsize;
@@ -30,11 +33,11 @@ public class TicTacToeGame {
 	public Board getBoard() {
 		return board;
 	}
-	
+
 	public void startNewGame() {
 		// Avoid nulls. Assign a "none" object to each location on the board.
-		for(int row=0; row<3; row++) 
-			for(int col=0; col<3; col++) pieces[row][col] = Piece.NONE;
+		for(int row=0; row<boardsize; row++)
+			for(int col=0; col<boardsize; col++) pieces[row][col] = Piece.NONE;
 		// Remove Pieces from the board (view), but not the squares themselves. Use a Predicate to test for Piece.
 		Predicate<Node> isPiece = (node) -> node instanceof Piece;
 		board.getChildren().removeIf(isPiece);
@@ -48,6 +51,9 @@ public class TicTacToeGame {
 	public boolean canMoveTo(Player player, int col, int row) {
 		if (row<0 || row>pieces.length) return false;
 		if (col<0 || col>pieces[row].length) return false;
+		// can't end the game
+		if(isGameOver()) return false;
+		//check
 		return pieces[row][col] == null || pieces[row][col] == Piece.NONE;
 	}
 	
@@ -72,6 +78,7 @@ public class TicTacToeGame {
 		else nextPlayer = Player.X;
 		/** after each move check if board is full */
 		if (boardIsFull()) gameOver.set(true);
+		if(winner() != Player.NONE) gameOver.set(true);
 		
 	}
 	
