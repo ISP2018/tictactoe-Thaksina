@@ -1,5 +1,4 @@
-## Tic-Tac-Toe
-
+## Tic-Tac-Toe [![Build Status](https://travis-ci.com/Thaksina/tictactoe.svg?branch=master)](https://travis-ci.com/Thaksina/tictactoe)
 ### Description
 
 A tic-tac-toe game written using JavaFX.
